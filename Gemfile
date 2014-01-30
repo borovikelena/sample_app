@@ -34,6 +34,11 @@ end
 
 group :development, :test do
   gem 'rspec-rails'
+  gem 'guard-rspec'
+  gem 'spork-rails'
+  gem 'guard-spork'
+  gem 'childprocess'
+  gem 'bootstrap-sass'
 end
 
 group :test do
