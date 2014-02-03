@@ -39,6 +39,7 @@ group :development, :test do
   gem 'guard-spork'
   gem 'childprocess'
   gem 'bootstrap-sass'
+  gem 'bcrypt-ruby'
 end
 
 group :test do
