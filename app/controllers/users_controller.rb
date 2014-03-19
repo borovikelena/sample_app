@@ -4,6 +4,7 @@ class UsersController < ApplicationController
   before_action :correct_user,   only: [:edit, :update]
   before_action :admin_user,    only: :destroy
   before_action :destroy_themself, only: :destroy
+  before_action :already_has_account,   only: [:new, :create]
 
   def index 
     @users = User.paginate(page: params[:page], :per_page => 10)
@@ -70,6 +71,10 @@ class UsersController < ApplicationController
 
     def destroy_themself
       redirect_to(root_url) if current_user == User.find(params[:id])
+    end
+
+    def already_has_account
+      redirect_to(root_url) if current_user
     end
 
 end
