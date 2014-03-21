@@ -16,4 +16,14 @@ namespace :db do
                    password_confirmation: password)
     end
   end
+
+
+  desc "Fill database with sample data"
+  task addmicroposts: :environment do
+    users = User.all(limit: 6)
+    20.times do |n|
+      content  = Faker::Lorem.sentence(5)
+      users.each {|user| user.microposts.create!(content: content)}
+    end
+  end
 end
