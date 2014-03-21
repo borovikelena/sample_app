@@ -47,19 +47,26 @@ describe "Static pages" do
 
   describe "for signed-in users" do
     let(:user) { FactoryGirl.create(:user) }
+    let(:user2) { FactoryGirl.create(:user, email:'elena.borovik@gameloft.com') }
     before do
-      FactoryGirl.create(:micropost, user: user, content: "Lorem ipsum")
-      FactoryGirl.create(:micropost, user: user, content: "Dolor sit amet")
+      5.times { |n| FactoryGirl.create(:micropost, user:user2, content: "Some content#{n}") }
+      15.times { |n| FactoryGirl.create(:micropost, user:user, content: "Some content#{n}") }
+
       sign_in user
       visit root_path
     end
 
-    it "should render the user's feed" do
-      user.feed.each do |item|
+    it { should have_selector('div.pagination') }
+    it { should have_content(user.feed.count) }
+
+
+    it "should list each micropost" do
+      user.feed.paginate(page: 1, :per_page => 10).each do |item|
         expect(page).to have_selector("li##{item.id}", text: item.content)
+        expect(page).not_to have_link('delete', href: micropost_path(item)) unless item.user == user
       end
     end
   end
-
+  
 end
  
