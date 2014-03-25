@@ -4,6 +4,9 @@
       <section>
         <%= render 'shared/user_info' %>
       </section>
+       <section>
+        <%= render 'shared/stats' %>
+      </section>
       <% if current_user.microposts.any? %>
 	      <section>
 	        <%= render 'shared/micropost_form' %>
