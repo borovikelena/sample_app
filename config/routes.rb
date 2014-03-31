@@ -1,14 +1,21 @@
 SampleApp::Application.routes.draw do
 
+  get "password_resets/new"
   resources :users do
     member do
       get :following, :followers
+    end
+  end
+  resources :users do
+    member do
+      post :notice, defaults: { format: 'js' }
     end
   end
 
   resources :sessions, only: [:new, :create, :destroy]
   resources :microposts, only: [:create, :destroy]
   resources :relationships, only: [:create, :destroy]
+  resources :password_resets
 
   match '/signup',  to: 'users#new',            via: 'get'
   match '/signin',  to: 'sessions#new',         via: 'get'

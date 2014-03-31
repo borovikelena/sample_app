@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   include SessionsHelper
-  before_action :signed_in_user, only: [:index,:edit, :update, :destroy, :following, :followers]
-  before_action :correct_user,   only: [:edit, :update]
+  before_action :signed_in_user, only: [:index,:edit, :update, :destroy, :following, :followers, :notice]
+  before_action :correct_user,   only: [:edit, :update, :notice]
   before_action :admin_user,    only: :destroy
   before_action :destroy_themself, only: :destroy
   before_action :already_has_account,   only: [:new, :create]
@@ -53,6 +53,27 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @users = @user.followed_users.paginate(page: params[:page])
     render 'show_follow'
+  end
+
+  def notice
+    @user = User.find(params[:id])
+     respond_to do |format|
+      if @user.update_attribute(:not_notice, params[:not_notice])
+        if params[:not_notice] == 'true'
+          @message = "You will not recive message when user follow"
+        else
+          @message = "You will recive notice when user follow"
+        end
+        flash[:success] = @message
+        format.html { redirect_to @user, :notice => @message }
+        format.js {}
+      else
+        @message = "Your changes not updated"
+        flash[:error] = @message
+        format.html { redirect_to @user, :notice => @message  }
+        format.js {}
+      end
+    end 
   end
 
   def followers

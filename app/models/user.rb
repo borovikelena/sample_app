@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
 
   before_save { self.email = email.downcase }
   before_create :create_remember_token
-  
+
 
   validates :name, presence: true, length: { maximum: 50 }
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -42,12 +42,29 @@ class User < ActiveRecord::Base
     self.relationships.create!(followed_id: other_user.id)
   end
 
+  def not_notice_user
+    not_notice
+  end
+
   def unfollow!(other_user)
     relationships.find_by(followed_id: other_user.id).destroy!
+  end
+
+  def send_password_reset
+    generate_token(:password_reset_token)
+    self.password_reset_sent_at = Time.zone.now
+    save!(validate: false)
+    UserMailer.password_reset(self).deliver
   end
 
   private
     def create_remember_token
     	self.remember_token = User.encrypt(User.new_remember_token)
+    end
+
+    def generate_token(column)
+      begin
+        self[column] = User.new_remember_token
+      end while User.exists?(column => self[column])
     end
 end

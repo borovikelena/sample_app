@@ -257,6 +257,7 @@ DEPENDENCIES
   guard-spork
   jbuilder (~> 1.2)
   jquery-rails
+  mail (= 2.5.4)
   rails (= 4.0.2)
   rspec-rails
   sass-rails (~> 4.0.0)
