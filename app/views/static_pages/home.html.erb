@@ -7,11 +7,9 @@
        <section>
         <%= render 'shared/stats' %>
       </section>
-      <% if current_user.microposts.any? %>
 	      <section>
 	        <%= render 'shared/micropost_form' %>
 	      </section>
-      <% end %>
     </aside>
     <div class="span8">
       <h3>Micropost Feed</h3>

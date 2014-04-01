@@ -12,4 +12,9 @@ class Micropost < ActiveRecord::Base
           user_id: user.id)
   end
 
+  def self.search(search)
+    where("content LIKE ?", "%#{search}%")
+  end
+
+
 end
