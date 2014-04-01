@@ -1,0 +1,5 @@
+Hi <%= @user.name %>!,
+
+Thank you for registering!
+
+Your activation url: <%= activate_users_path(@user.activation_token) %>

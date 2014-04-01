@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   before_action :already_has_account,   only: [:new, :create]
 
   def index 
-    @users = User.paginate(page: params[:page], :per_page => 10)
+    @users = User.where(state: 1).paginate(page: params[:page], :per_page => 10)
   end
 
   def new
@@ -40,12 +40,28 @@ class UsersController < ApplicationController
   def create
   	@user = User.new(user_params)
   	if @user.save
-      sign_in @user
-      flash[:success] = "Welcome to the Sample App!"
-      redirect_to @user
+      UserMailer.send_activation_url(@user).deliver
+      flash[:success] = "You will recive activation url on mail, please check it and follow"
+      redirect_to root_url
   	else
   	  render 'new'
     end
+  end
+
+  def activate
+    @user = User.find_by_activation_token!(params[:id])
+
+    if @user.activation_token_sent_at < 2.days.ago
+      flash[:error] = "Activation has been expired"
+      redirect_to signin_path
+    elsif @user.activate!
+      flash[:success] = "User has been activated!"
+      sign_in @user
+      redirect_to @user
+    else
+      flash[:error] = "User could not be activated!"
+      redirect_to signin_path
+    end 
   end
 
   def following

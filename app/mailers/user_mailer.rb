@@ -22,4 +22,9 @@ class UserMailer < ActionMailer::Base
     @followed_user = followed_user
     mail(:to => "#{user.name} <#{user.email}>", :subject => "You have new follower #{followed_user.name}")
   end
+
+  def send_activation_url(user)
+    @user = user
+    mail :to => user.email, :subject => "Activation url"
+  end
 end

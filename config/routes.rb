@@ -4,19 +4,17 @@ SampleApp::Application.routes.draw do
   resources :users do
     member do
       get :following, :followers
-    end
-  end
-  resources :users do
-    member do
       post :notice, defaults: { format: 'js' }
     end
   end
+
 
   resources :sessions, only: [:new, :create, :destroy]
   resources :microposts, only: [:create, :destroy]
   resources :relationships, only: [:create, :destroy]
   resources :password_resets
 
+  get 'users/:id/activate', to: 'users#activate', as: 'activate_users'
   match '/signup',  to: 'users#new',            via: 'get'
   match '/signin',  to: 'sessions#new',         via: 'get'
   match '/signout', to: 'sessions#destroy',     via: 'delete'
