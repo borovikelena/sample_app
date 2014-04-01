@@ -65,6 +65,15 @@ class User < ActiveRecord::Base
     relationships.find_by(followed_id: other_user.id).destroy!
   end
 
+  def self.search(search)
+
+    if search
+      where('state = ? and name LIKE ?', 1, "%#{search}%")
+    else
+      where(state: 1)
+    end
+  end
+
   def send_password_reset
     generate_token(:password_reset_token)
     self.password_reset_sent_at = Time.zone.now

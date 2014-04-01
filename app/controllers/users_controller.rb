@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   before_action :already_has_account,   only: [:new, :create]
 
   def index 
-    @users = User.where(state: 1).paginate(page: params[:page], :per_page => 10)
+    @users = User.search(params[:search]).paginate(page: params[:page], :per_page => 10)
   end
 
   def new
