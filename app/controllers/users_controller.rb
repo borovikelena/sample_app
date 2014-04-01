@@ -37,6 +37,18 @@ class UsersController < ApplicationController
     redirect_to users_url
   end
 
+  def microposts
+    @user = User.find(params[:id])
+    @microposts = @user.microposts
+    @title = "#{@user.name} posts"
+    @updated = @microposts.first.updated_at unless @microposts.empty?
+
+    respond_to do |format|
+      format.atom { render :layout => false }
+      format.rss { redirect_to feed_path(:format => :atom), :status => :moved_permanently }
+    end
+  end
+
   def create
   	@user = User.new(user_params)
   	if @user.save

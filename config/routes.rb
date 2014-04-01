@@ -5,6 +5,7 @@ SampleApp::Application.routes.draw do
     member do
       get :following, :followers
       post :notice, defaults: { format: 'js' }
+      get :microposts, defaults: { format: 'atom' }
     end
   end
 
