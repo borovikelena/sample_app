@@ -2,6 +2,9 @@
   <%= link_to gravatar_for(feed_item.user), feed_item.user %>
   <span class="user">
     <%= link_to feed_item.user.name, feed_item.user %>
+    <% if feed_item.in_reply_to %>
+      reply to <%= link_to feed_item.in_reply_to.name, feed_item.in_reply_to %>
+    <% end %>
   </span>
   <span class="content"><%= wrap(feed_item.content) %></span>
   <span class="timestamp">
