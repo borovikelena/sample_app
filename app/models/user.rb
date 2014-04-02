@@ -6,13 +6,17 @@ class User < ActiveRecord::Base
   #default_scope { where state: 'active' }
 
 
-  validates :name, presence: true, length: { maximum: 50 }
+  VALID_NAME_REGEX =  /[\w+\-.\s]/i
+  validates :name, presence: true,
+            format: { with: VALID_NAME_REGEX }
+
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false }
   validates :password, length: { minimum: 6, maximum: 50 }, :if => :validate_password?
   has_many :microposts, dependent: :destroy
   has_many :relationships, foreign_key: "follower_id", dependent: :destroy
   has_many :followed_users, through: :relationships, source: :followed
+  has_many :replies, foreign_key: "in_reply_to_id", class_name: "Micropost"
 
   has_many :reverse_relationships, foreign_key: "followed_id",
                                    class_name:  "Relationship",
@@ -45,7 +49,7 @@ class User < ActiveRecord::Base
   end
 
   def feed
-    Micropost.from_users_followed_by(self)
+    Micropost.from_users_followed_by_including_replies(self)
   end
 
   def following?(other_user)

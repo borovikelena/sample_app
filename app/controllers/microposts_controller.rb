@@ -25,6 +25,15 @@ class MicropostsController < ApplicationController
       params.require(:micropost).permit(:content)
     end
 
+    def reply_to_user
+      if reply_to = @micropost.content.match(/\A(@[\w+\-.])\z/i)
+      @other_user = User.where(name: reply_to.to_s[1..-1])
+        if @other_user && current_user.followed_users.includes(@other_user)
+        @micropost.in_reply_to = @other_user.id
+        end
+      end
+    end
+
     def correct_user
       @micropost = current_user.microposts.find(params[:id])
     rescue
