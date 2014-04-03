@@ -1,4 +1,8 @@
 class Micropost < ActiveRecord::Base
+  include PublicActivity::Model
+
+  tracked owner: Proc.new{ |controller, model| controller.current_user }
+
   @@reply_to_regexp = /(\d+)-([\w+\-.]*)/
   validates :user_id, presence: true
   validates :content, presence: true, length: { maximum: 140 }

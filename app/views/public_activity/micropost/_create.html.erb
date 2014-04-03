@@ -1,0 +1,14 @@
+
+<% if activity.trackable %>
+<%= link_to activity.trackable.user.name, activity.trackable%>
+<% if activity.trackable.in_reply_to_id %>
+
+ reply to <%= link_to activity.trackable.in_reply_to.name, activity.trackable.in_reply_to%>
+<% end %>
+<span>
+    Posted <%= time_ago_in_words(activity.trackable.created_at) %> ago.
+  </span>
+  <span class="content"><%= wrap(activity.trackable.content) %></span>
+<% else %>
+  which has since been removed
+<% end %>

@@ -1,4 +1,5 @@
-class UsersController < ApplicationController
+class Api::UsersController < ApplicationController
+  http_basic_authenticate_with :name => "generic", :password => "generic"
   include SessionsHelper
   before_action :signed_in_user, only: [:index,:edit, :update, :destroy, :following, :followers, :notice]
   before_action :correct_user,   only: [:edit, :update, :notice]

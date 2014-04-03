@@ -1,5 +1,6 @@
 SampleApp::Application.routes.draw do
 
+  get "activities/index"
   get "password_resets/new"
   resources :users do
     member do
@@ -7,6 +8,10 @@ SampleApp::Application.routes.draw do
       post :notice, defaults: { format: 'js' }
       get :microposts, defaults: { format: 'atom' }
     end
+  end
+
+  namespace :api do
+    resources :users, :defaults => { :format => 'xml' }
   end
 
 
