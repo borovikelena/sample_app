@@ -1,0 +1,4 @@
+- if current_user?(@user)
+  %div{:id=>"notice_form"}
+    = check_box_tag :not_notice, current_user.id , current_user.not_notice, :class => "notice-mail" 
+    = content_tag :span, 'Not notice me when user follow'

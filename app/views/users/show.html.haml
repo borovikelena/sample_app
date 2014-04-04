@@ -1,0 +1,18 @@
+= link_to "RSS", microposts_user_path 
+- provide(:title, @user.name) 
+%h1= @user.name
+%div{:class=>"row"}
+  %aside{:class=>"span4"}
+    %section
+      %h1
+        = gravatar_for @user
+        = @user.name
+        %section= render 'shared/stats'
+  %div{:class=>"span8"}
+    = render 'notice_form' if signed_in?
+    = render 'follow_form' if signed_in?
+    - if @user.microposts.any?
+      %h3 Microposts (#{@user.microposts.count})
+      %ol{:class=>"microposts"}
+        = render @microposts
+      = will_paginate @microposts
