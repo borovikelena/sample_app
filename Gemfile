@@ -32,7 +32,14 @@ gem 'bootstrap-will_paginate', '0.0.9'
 gem "mail", "2.5.4"
 gem "state_machine"
 gem "public_activity"
-
+gem 'memcache-client'
+gem 'redis'
+gem 'redis-namespace'
+gem 'resque'
+gem 'resque-web'
+gem 'haml'
+gem 'haml-rails'
+#gem 'activeadmin'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

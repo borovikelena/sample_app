@@ -1,0 +1,9 @@
+- provide(:title, "Edit user")
+- provide(:submit_title, "Save changes")
+%h1 Update your profile
+
+%div{:class=>"row"}
+  %div{:class=>"span6 offset3"} 
+    = render 'users/form' 
+    = gravatar_for @user 
+    %a{:href=>"http://gravatar.com/emails",:target => "_blank"} change

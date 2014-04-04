@@ -106,6 +106,13 @@ GEM
       childprocess (>= 0.2.3)
       guard (>= 1.1)
       spork (>= 0.8.4)
+    haml (4.0.5)
+      tilt
+    haml-rails (0.5.3)
+      actionpack (>= 4.0.1)
+      activesupport (>= 4.0.1)
+      haml (>= 3.1, < 5.0)
+      railties (>= 4.0.1)
     hike (1.2.3)
     i18n (0.6.9)
     jbuilder (1.5.3)
@@ -124,10 +131,12 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    memcache-client (1.8.5)
     method_source (0.8.2)
     mime-types (1.25.1)
     mini_portile (0.5.3)
     minitest (4.7.5)
+    mono_logger (1.1.0)
     multi_json (1.9.2)
     multi_test (0.1.1)
     nio4r (1.0.0)
@@ -151,6 +160,8 @@ GEM
       i18n (>= 0.5.0)
       railties (>= 3.0.0)
     rack (1.5.2)
+    rack-protection (1.5.2)
+      rack
     rack-test (0.6.2)
       rack (>= 1.0)
     rails (4.0.2)
@@ -172,6 +183,21 @@ GEM
       ffi (>= 0.5.0)
     rdoc (4.1.1)
       json (~> 1.4)
+    redis (3.0.7)
+    redis-namespace (1.4.1)
+      redis (~> 3.0.4)
+    resque (1.25.2)
+      mono_logger (~> 1.0)
+      multi_json (~> 1.0)
+      redis-namespace (~> 1.3)
+      sinatra (>= 0.9.2)
+      vegas (~> 0.1.2)
+    resque-web (0.0.5)
+      coffee-rails
+      jquery-rails
+      resque
+      sass-rails
+      twitter-bootstrap-rails
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
@@ -203,6 +229,10 @@ GEM
       multi_json (~> 1.0)
       rubyzip (~> 1.0)
       websocket (~> 1.0.4)
+    sinatra (1.4.4)
+      rack (~> 1.4)
+      rack-protection (~> 1.4)
+      tilt (~> 1.3, >= 1.3.4)
     slop (3.5.0)
     spork (1.0.0rc4)
     spork (1.0.0rc4-x86-mingw32)
@@ -232,10 +262,17 @@ GEM
       polyglot (>= 0.3.1)
     turbolinks (2.2.1)
       coffee-rails
+    twitter-bootstrap-rails (2.2.8)
+      actionpack (>= 3.1)
+      execjs
+      rails (>= 3.1)
+      railties (>= 3.1)
     tzinfo (0.3.39)
     uglifier (2.5.0)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    vegas (0.1.11)
+      rack (>= 1.0.0)
     websocket (1.0.7)
     will_paginate (3.0.4)
     win32-process (0.7.4)
@@ -261,11 +298,18 @@ DEPENDENCIES
   faker (= 1.1.2)
   guard-rspec
   guard-spork
+  haml
+  haml-rails
   jbuilder (~> 1.2)
   jquery-rails
   mail (= 2.5.4)
+  memcache-client
   public_activity
   rails (= 4.0.2)
+  redis
+  redis-namespace
+  resque
+  resque-web
   rspec-rails
   sass-rails (~> 4.0.0)
   sdoc

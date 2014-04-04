@@ -1,7 +1,7 @@
 
 <% if activity.trackable %>
 <%= link_to activity.trackable.user.name, activity.trackable%>
-<% if activity.trackable.in_reply_to_id %>
+<% if activity.trackable.in_reply_to %>
 
  reply to <%= link_to activity.trackable.in_reply_to.name, activity.trackable.in_reply_to%>
 <% end %>
